@@ -143,24 +143,24 @@ class CropImageView(
     private fun actionDownCropRect(x: Float, y: Float) {
         // 1. Four lines
         // 2. Four corners
-        if (x > cropRect.left + TOUCH_RADIUS && x < cropRect.right - TOUCH_RADIUS && y > cropRect.top - TOUCH_RADIUS && y < cropRect.top + TOUCH_RADIUS) {
-            touchType = TouchType.TOP
-        } else if (x > cropRect.left - TOUCH_RADIUS && x < cropRect.left + TOUCH_RADIUS && y > cropRect.top + TOUCH_RADIUS && y < cropRect.bottom - TOUCH_RADIUS) {
-            touchType = TouchType.LEFT
-        } else if (x > cropRect.right - TOUCH_RADIUS && x < cropRect.right + TOUCH_RADIUS && y > cropRect.top + TOUCH_RADIUS && y < cropRect.bottom - TOUCH_RADIUS) {
-            touchType = TouchType.RIGHT
-        } else if (x > cropRect.left + TOUCH_RADIUS && x < cropRect.right - TOUCH_RADIUS && y > cropRect.bottom - TOUCH_RADIUS && y < cropRect.bottom + TOUCH_RADIUS) {
-            touchType = TouchType.BOTTOM
-        } else if (x < cropRect.right - cropRect.left - TOUCH_RADIUS && y < cropRect.bottom - cropRect.top - TOUCH_RADIUS) {
-            touchType = TouchType.TOP_LEFT
-        } else if (x > cropRect.right - cropRect.left - TOUCH_RADIUS && y < cropRect.bottom - cropRect.top - TOUCH_RADIUS) {
-            touchType = TouchType.TOP_RIGHT
-        } else if (x < cropRect.right - cropRect.left - TOUCH_RADIUS && y > cropRect.bottom - cropRect.top - TOUCH_RADIUS) {
-            touchType = TouchType.BOTTOM_LEFT
-        } else if (x > cropRect.right - cropRect.left - TOUCH_RADIUS && y > cropRect.bottom - cropRect.top - TOUCH_RADIUS) {
-            touchType = TouchType.BOTTOM_RIGHT
+        touchType = if ((x > cropRect.left + TOUCH_RADIUS && x < cropRect.right - TOUCH_RADIUS) && (y > cropRect.top - TOUCH_RADIUS && y < cropRect.top + TOUCH_RADIUS)) {
+            TouchType.TOP
+        } else if ((x > cropRect.left - TOUCH_RADIUS && x < cropRect.left + TOUCH_RADIUS) && (y > cropRect.top + TOUCH_RADIUS && y < cropRect.bottom - TOUCH_RADIUS)) {
+            TouchType.LEFT
+        } else if ((x > cropRect.right - TOUCH_RADIUS && x < cropRect.right + TOUCH_RADIUS) && (y > cropRect.top + TOUCH_RADIUS && y < cropRect.bottom - TOUCH_RADIUS)) {
+            TouchType.RIGHT
+        } else if ((x > cropRect.left + TOUCH_RADIUS && x < cropRect.right - TOUCH_RADIUS) && (y > cropRect.bottom - TOUCH_RADIUS && y < cropRect.bottom + TOUCH_RADIUS)) {
+            TouchType.BOTTOM
+        } else if ((x < cropRect.left + TOUCH_RADIUS && x > cropRect.left - TOUCH_RADIUS) && (y < cropRect.top + TOUCH_RADIUS && y > cropRect.top - TOUCH_RADIUS)) {
+            TouchType.TOP_LEFT
+        } else if ((x < cropRect.right + TOUCH_RADIUS && x > cropRect.right - TOUCH_RADIUS) && (y < cropRect.top + TOUCH_RADIUS && y > cropRect.top - TOUCH_RADIUS)) {
+            TouchType.TOP_RIGHT
+        } else if ((x < cropRect.left + TOUCH_RADIUS && x > cropRect.left - TOUCH_RADIUS) && (y < cropRect.bottom + TOUCH_RADIUS && y > cropRect.bottom - TOUCH_RADIUS)) {
+            TouchType.BOTTOM_LEFT
+        } else if ((x < cropRect.right + TOUCH_RADIUS && x > cropRect.right - TOUCH_RADIUS) && (y < cropRect.bottom + TOUCH_RADIUS && y > cropRect.bottom - TOUCH_RADIUS)) {
+            TouchType.BOTTOM_RIGHT
         } else {
-            touchType = null
+            null
         }
     }
 
@@ -252,6 +252,6 @@ class CropImageView(
         private const val TAG = "CropImageView"
         private const val PADDING_FORM_SCREEN = 50
         private const val SIZE_OF_CORNER_LINE = 50
-        private const val TOUCH_RADIUS = 30
+        private const val TOUCH_RADIUS = 50
     }
 }
