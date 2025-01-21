@@ -1,6 +1,7 @@
 package com.image.crop
 
 enum class TouchType {
+    NONE,
     TOP,
     LEFT,
     RIGHT,

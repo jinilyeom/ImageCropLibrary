@@ -31,7 +31,7 @@ class CropImageView(
     }
     private val imageRect = Rect()
     private val imagePaint = Paint()
-    private var touchType: TouchType? = null
+    private var touchType: TouchType = TouchType.NONE
 
     private var layoutWidth = 0
     private var layoutHeight = 0
@@ -160,7 +160,7 @@ class CropImageView(
         } else if ((x < cropRect.right + TOUCH_RADIUS && x > cropRect.right - TOUCH_RADIUS) && (y < cropRect.bottom + TOUCH_RADIUS && y > cropRect.bottom - TOUCH_RADIUS)) {
             TouchType.BOTTOM_RIGHT
         } else {
-            null
+            TouchType.NONE
         }
     }
 
