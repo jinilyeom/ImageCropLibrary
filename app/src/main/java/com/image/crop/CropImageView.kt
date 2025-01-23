@@ -31,6 +31,12 @@ class CropImageView(
     }
     private val imageRect = Rect()
     private val imagePaint = Paint()
+    private val minCropRect = Rect().apply {
+        left = 200
+        top = 200
+        right = 200
+        bottom = 200
+    }
     private var touchType: TouchType = TouchType.NONE
 
     private var layoutWidth = 0
@@ -168,46 +174,118 @@ class CropImageView(
         when (touchType) {
             TouchType.TOP -> {
                 cropRect.apply {
-                    top = y.toInt()
+                    top = if (y < imageRect.top) {
+                        imageRect.top
+                    } else if (y > cropRect.bottom - minCropRect.bottom) {
+                        cropRect.bottom - minCropRect.bottom
+                    } else {
+                        y.toInt()
+                    }
                 }
             }
             TouchType.LEFT -> {
                 cropRect.apply {
-                    left = x.toInt()
+                    left = if (x < imageRect.left) {
+                        imageRect.left
+                    } else if (x > cropRect.right - minCropRect.right) {
+                        cropRect.right - minCropRect.right
+                    } else {
+                        x.toInt()
+                    }
                 }
             }
             TouchType.RIGHT -> {
                 cropRect.apply {
-                    right = x.toInt()
+                    right = if (x > imageRect.right) {
+                        imageRect.right
+                    } else if (x < cropRect.left + minCropRect.left) {
+                        cropRect.left + minCropRect.left
+                    } else {
+                        x.toInt()
+                    }
                 }
             }
             TouchType.BOTTOM -> {
                 cropRect.apply {
-                    bottom = y.toInt()
+                    bottom = if (y > imageRect.bottom) {
+                        imageRect.bottom
+                    } else if (y < cropRect.top + minCropRect.top) {
+                        cropRect.top + minCropRect.top
+                    } else {
+                        y.toInt()
+                    }
                 }
             }
             TouchType.TOP_LEFT -> {
                 cropRect.apply {
-                    left = x.toInt()
-                    top = y.toInt()
+                    left = if (x < imageRect.left) {
+                        imageRect.left
+                    } else if (x > cropRect.right - minCropRect.right) {
+                        cropRect.right - minCropRect.right
+                    } else {
+                        x.toInt()
+                    }
+                    top = if (y < imageRect.top) {
+                        imageRect.top
+                    } else if (y > cropRect.bottom - minCropRect.bottom) {
+                        cropRect.bottom - minCropRect.bottom
+                    } else {
+                        y.toInt()
+                    }
                 }
             }
             TouchType.TOP_RIGHT -> {
                 cropRect.apply {
-                    top = y.toInt()
-                    right = x.toInt()
+                    top = if (y < imageRect.top) {
+                        imageRect.top
+                    } else if (y > cropRect.bottom - minCropRect.bottom) {
+                        cropRect.bottom - minCropRect.bottom
+                    } else {
+                        y.toInt()
+                    }
+                    right = if (x > imageRect.right) {
+                        imageRect.right
+                    } else if (x < cropRect.left + minCropRect.left) {
+                        cropRect.left + minCropRect.left
+                    } else {
+                        x.toInt()
+                    }
                 }
             }
             TouchType.BOTTOM_LEFT -> {
                 cropRect.apply {
-                    left = x.toInt()
-                    bottom = y.toInt()
+                    left = if (x < imageRect.left) {
+                        imageRect.left
+                    } else if (x > cropRect.right - minCropRect.right) {
+                        cropRect.right - minCropRect.right
+                    } else {
+                        x.toInt()
+                    }
+                    bottom = if (y > imageRect.bottom) {
+                        imageRect.bottom
+                    } else if (y < cropRect.top + minCropRect.top) {
+                        cropRect.top + minCropRect.top
+                    } else {
+                        y.toInt()
+                    }
                 }
             }
             TouchType.BOTTOM_RIGHT -> {
                 cropRect.apply {
-                    right = x.toInt()
-                    bottom = y.toInt()
+                    right = if (x > imageRect.right) {
+                        imageRect.right
+                    } else if (x < cropRect.left + minCropRect.left) {
+                        cropRect.left + minCropRect.left
+                    } else {
+                        x.toInt()
+                    }
+                    bottom = if (y > imageRect.bottom) {
+                        imageRect.bottom
+                    } else if (y < cropRect.top + minCropRect.top) {
+                        cropRect.top + minCropRect.top
+                    } else {
+                        y.toInt()
+                    }
                 }
             }
             else -> {
