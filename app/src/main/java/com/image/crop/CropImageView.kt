@@ -10,6 +10,8 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import kotlin.math.max
+import kotlin.math.min
 
 class CropImageView(
     context: Context, attrs: AttributeSet
@@ -305,10 +307,10 @@ class CropImageView(
         }
 
         rect.set(
-            PADDING_FORM_SCREEN,
-            PADDING_FORM_SCREEN,
-            bitmap!!.width - PADDING_FORM_SCREEN,
-            bitmap!!.height
+            (layoutWidth / 2) - (bitmap!!.width / 2),
+            (layoutHeight / 2) - (bitmap!!.height / 2),
+            ((layoutWidth / 2) - (bitmap!!.width / 2)) + bitmap!!.width,
+            ((layoutHeight / 2) - (bitmap!!.height / 2)) + bitmap!!.height
         )
     }
 
@@ -319,7 +321,13 @@ class CropImageView(
     }
 
     fun cropImage() {
-        bitmap = Bitmap.createBitmap(bitmap!!, cropRect.left, cropRect.top, cropRect.width(), cropRect.height())
+        bitmap = Bitmap.createBitmap(
+            bitmap!!,
+            max(imageRect.left, cropRect.left) - min(imageRect.left, cropRect.left),
+            max(imageRect.top, cropRect.top) - min(imageRect.top, cropRect.top),
+            cropRect.width(),
+            cropRect.height()
+        )
 
         initializeRect()
 
@@ -328,7 +336,6 @@ class CropImageView(
 
     companion object {
         private const val TAG = "CropImageView"
-        private const val PADDING_FORM_SCREEN = 50
         private const val SIZE_OF_CORNER_LINE = 50
         private const val TOUCH_RADIUS = 50
     }
