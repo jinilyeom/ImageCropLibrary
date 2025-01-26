@@ -296,28 +296,10 @@ class CropImageView(
         }
     }
 
-    private fun initializeRect() {
-        setRect(imageRect)
-        setRect(cropRect)
-    }
-
-    private fun setRect(rect: Rect) {
-        if (bitmap == null) {
-            return
-        }
-
-        rect.set(
-            (layoutWidth / 2) - (bitmap!!.width / 2),
-            (layoutHeight / 2) - (bitmap!!.height / 2),
-            ((layoutWidth / 2) - (bitmap!!.width / 2)) + bitmap!!.width,
-            ((layoutHeight / 2) - (bitmap!!.height / 2)) + bitmap!!.height
-        )
-    }
-
     fun setImage(pickImageBitmap: Bitmap?) {
         bitmap = pickImageBitmap
 
-        initializeRect()
+        initializeImageAndCropRect()
     }
 
     fun cropImage() {
@@ -329,9 +311,27 @@ class CropImageView(
             cropRect.height()
         )
 
-        initializeRect()
+        initializeImageAndCropRect()
 
         invalidate()
+    }
+
+    private fun initializeImageAndCropRect() {
+        setImageAndCropRect(imageRect)
+        setImageAndCropRect(cropRect)
+    }
+
+    private fun setImageAndCropRect(rect: Rect) {
+        if (bitmap == null) {
+            return
+        }
+
+        rect.set(
+            (layoutWidth / 2) - (bitmap!!.width / 2),
+            (layoutHeight / 2) - (bitmap!!.height / 2),
+            ((layoutWidth / 2) - (bitmap!!.width / 2)) + bitmap!!.width,
+            ((layoutHeight / 2) - (bitmap!!.height / 2)) + bitmap!!.height
+        )
     }
 
     companion object {
