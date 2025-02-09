@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
-import java.io.IOException
 
 object Utils {
     private const val TAG = "Utils"
@@ -17,12 +16,12 @@ object Utils {
 
         try {
             val rawFileDescriptor = context.contentResolver.openFileDescriptor(uri, "r")
-            val bitmap = BitmapFactory.decodeFileDescriptor(rawFileDescriptor?.fileDescriptor)
-            rawFileDescriptor?.close()
 
-            return bitmap
-        } catch (ex: IOException) {
-            Log.e(TAG, "Bitmap IOException")
+            return rawFileDescriptor.use { pfd ->
+                BitmapFactory.decodeFileDescriptor(pfd?.fileDescriptor)
+            }
+        } catch (ex: Exception) {
+            Log.e(TAG, "Get bitmap Exception")
         }
 
         return null
