@@ -151,24 +151,16 @@ class CropImageView(
     private fun actionDownCropRect(x: Float, y: Float) {
         // 1. Four lines
         // 2. Four corners
-        touchType = if ((x > cropRect.left + TOUCH_RADIUS && x < cropRect.right - TOUCH_RADIUS) && (y > cropRect.top - TOUCH_RADIUS && y < cropRect.top + TOUCH_RADIUS)) {
-            TouchType.TOP
-        } else if ((x > cropRect.left - TOUCH_RADIUS && x < cropRect.left + TOUCH_RADIUS) && (y > cropRect.top + TOUCH_RADIUS && y < cropRect.bottom - TOUCH_RADIUS)) {
-            TouchType.LEFT
-        } else if ((x > cropRect.right - TOUCH_RADIUS && x < cropRect.right + TOUCH_RADIUS) && (y > cropRect.top + TOUCH_RADIUS && y < cropRect.bottom - TOUCH_RADIUS)) {
-            TouchType.RIGHT
-        } else if ((x > cropRect.left + TOUCH_RADIUS && x < cropRect.right - TOUCH_RADIUS) && (y > cropRect.bottom - TOUCH_RADIUS && y < cropRect.bottom + TOUCH_RADIUS)) {
-            TouchType.BOTTOM
-        } else if ((x < cropRect.left + TOUCH_RADIUS && x > cropRect.left - TOUCH_RADIUS) && (y < cropRect.top + TOUCH_RADIUS && y > cropRect.top - TOUCH_RADIUS)) {
-            TouchType.TOP_LEFT
-        } else if ((x < cropRect.right + TOUCH_RADIUS && x > cropRect.right - TOUCH_RADIUS) && (y < cropRect.top + TOUCH_RADIUS && y > cropRect.top - TOUCH_RADIUS)) {
-            TouchType.TOP_RIGHT
-        } else if ((x < cropRect.left + TOUCH_RADIUS && x > cropRect.left - TOUCH_RADIUS) && (y < cropRect.bottom + TOUCH_RADIUS && y > cropRect.bottom - TOUCH_RADIUS)) {
-            TouchType.BOTTOM_LEFT
-        } else if ((x < cropRect.right + TOUCH_RADIUS && x > cropRect.right - TOUCH_RADIUS) && (y < cropRect.bottom + TOUCH_RADIUS && y > cropRect.bottom - TOUCH_RADIUS)) {
-            TouchType.BOTTOM_RIGHT
-        } else {
-            TouchType.NONE
+        touchType = when {
+            (x > cropRect.left + TOUCH_RADIUS && x < cropRect.right - TOUCH_RADIUS) && (y > cropRect.top - TOUCH_RADIUS && y < cropRect.top + TOUCH_RADIUS) -> TouchType.TOP
+            (x > cropRect.left - TOUCH_RADIUS && x < cropRect.left + TOUCH_RADIUS) && (y > cropRect.top + TOUCH_RADIUS && y < cropRect.bottom - TOUCH_RADIUS) -> TouchType.LEFT
+            (x > cropRect.right - TOUCH_RADIUS && x < cropRect.right + TOUCH_RADIUS) && (y > cropRect.top + TOUCH_RADIUS && y < cropRect.bottom - TOUCH_RADIUS) -> TouchType.RIGHT
+            (x > cropRect.left + TOUCH_RADIUS && x < cropRect.right - TOUCH_RADIUS) && (y > cropRect.bottom - TOUCH_RADIUS && y < cropRect.bottom + TOUCH_RADIUS) -> TouchType.BOTTOM
+            (x < cropRect.left + TOUCH_RADIUS && x > cropRect.left - TOUCH_RADIUS) && (y < cropRect.top + TOUCH_RADIUS && y > cropRect.top - TOUCH_RADIUS) -> TouchType.TOP_LEFT
+            (x < cropRect.right + TOUCH_RADIUS && x > cropRect.right - TOUCH_RADIUS) && (y < cropRect.top + TOUCH_RADIUS && y > cropRect.top - TOUCH_RADIUS) -> TouchType.TOP_RIGHT
+            (x < cropRect.left + TOUCH_RADIUS && x > cropRect.left - TOUCH_RADIUS) && (y < cropRect.bottom + TOUCH_RADIUS && y > cropRect.bottom - TOUCH_RADIUS) -> TouchType.BOTTOM_LEFT
+            (x < cropRect.right + TOUCH_RADIUS && x > cropRect.right - TOUCH_RADIUS) && (y < cropRect.bottom + TOUCH_RADIUS && y > cropRect.bottom - TOUCH_RADIUS) -> TouchType.BOTTOM_RIGHT
+            else -> TouchType.NONE
         }
     }
 
